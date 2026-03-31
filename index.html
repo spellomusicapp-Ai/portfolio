@@ -738,7 +738,8 @@
     // the extra "shrink runway" height beyond the section's natural height,
     // scale + opacity are driven directly by scroll position — zero time-based animation.
     (function () {
-      const SHRINK_RUNWAY = 250; // px of extra scroll space for the shrink
+      const SHRINK_RUNWAY = 400; // px of extra scroll space for the shrink
+      const EFFECT_START  = 0.7; // fraction of runway before effect begins (0–1)
       const MIN_SCALE     = 0.88;
       const MIN_OPACITY   = 0.85;
       let ticking = false;
@@ -765,10 +766,11 @@
 
           const trackTop = track.getBoundingClientRect().top;
 
-          // 0 when page loads / track just entered view,
-          // SHRINK_RUNWAY when the sticky phase is complete
-          const scrolled = Math.max(0, -trackTop);
-          const progress = Math.min(1, scrolled / SHRINK_RUNWAY);
+          // Effect only starts after EFFECT_START fraction of the runway
+          const scrolled      = Math.max(0, -trackTop);
+          const effectOffset  = SHRINK_RUNWAY * EFFECT_START;
+          const effectRange   = SHRINK_RUNWAY * (1 - EFFECT_START);
+          const progress      = Math.min(1, Math.max(0, (scrolled - effectOffset) / effectRange));
 
           section.style.transform    = `scale(${(1 - (1 - MIN_SCALE)   * progress).toFixed(4)})`;
           section.style.opacity      =         (1 - (1 - MIN_OPACITY) * progress).toFixed(4);
