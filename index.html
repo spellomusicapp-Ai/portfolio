@@ -37,7 +37,7 @@
       align-items: center;
       overflow: hidden;
       transform-origin: center top;
-      will-change: transform, opacity;
+      will-change: transform, opacity, border-radius;
     }
 
     /* gradient blobs */
@@ -220,14 +220,10 @@
     }
 
     .projects-section {
-      position: sticky;
-      top: 0;
       padding: 80px 40px;
       max-width: 100%;
       width: 100%;
       background: #d4d2cf;
-      transform-origin: center top;
-      will-change: transform, opacity;
     }
     /* keep inner content centred */
     .projects-section > * {
@@ -371,8 +367,6 @@
 
     /* ── CAPABILITIES ── */
     .capabilities-section {
-      position: sticky;
-      top: 0;
       max-width: 1169px;
       width: 100%;
       margin: 0 auto;
@@ -380,8 +374,6 @@
       border-radius: 24px;
       padding: 80px 70px;
       text-align: center;
-      transform-origin: center top;
-      will-change: transform, opacity;
     }
     .capabilities-section h2 {
       font-size: 48px;
@@ -751,7 +743,7 @@
       const MIN_OPACITY   = 0.85;
       let ticking = false;
 
-      const tracks = Array.from(document.querySelectorAll('.card-track'));
+      const tracks = [document.getElementById('card-home')].filter(Boolean);
 
       // ── Set each card-track height = section height + shrink runway ──
       function setHeights() {
@@ -778,8 +770,9 @@
           const scrolled = Math.max(0, -trackTop);
           const progress = Math.min(1, scrolled / SHRINK_RUNWAY);
 
-          section.style.transform = `scale(${(1 - (1 - MIN_SCALE)   * progress).toFixed(4)})`;
-          section.style.opacity   =         (1 - (1 - MIN_OPACITY) * progress).toFixed(4);
+          section.style.transform    = `scale(${(1 - (1 - MIN_SCALE)   * progress).toFixed(4)})`;
+          section.style.opacity      =         (1 - (1 - MIN_OPACITY) * progress).toFixed(4);
+          section.style.borderRadius = `${(progress * 32).toFixed(1)}px`;
         });
         ticking = false;
       }
