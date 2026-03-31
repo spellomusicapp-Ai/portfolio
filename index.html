@@ -682,27 +682,31 @@
       // Set initial states
       line.style.transformOrigin = 'left center';
       line.style.transform       = 'scaleX(0)';
-      line.style.willChange      = 'transform';
+      line.style.opacity         = '0';
+      line.style.willChange      = 'transform, opacity';
       title.style.opacity        = '0';
-      title.style.transform      = 'translateY(28px)';
+      title.style.transform      = 'translateY(60px)';
       title.style.willChange     = 'opacity, transform';
 
-      const SCROLL_RANGE = 360; // px of scroll to complete the full animation
+      // Animation starts when section top hits 90% down the viewport,
+      // completes 600px later — slow enough to feel deliberate
+      const SCROLL_RANGE  = 600;
+      const START_OFFSET  = 0.9; // fraction of vh where animation begins
 
       function update() {
-        const rect     = section.getBoundingClientRect();
-        const vh       = window.innerHeight;
-        // progress 0 → 1 as the section scrolls from entering viewport bottom to SCROLL_RANGE px past that
-        const scrolled = vh - rect.top;
+        const rect    = section.getBoundingClientRect();
+        const vh      = window.innerHeight;
+        const scrolled = (vh * START_OFFSET) - rect.top;
         const progress = Math.min(1, Math.max(0, scrolled / SCROLL_RANGE));
 
-        // Line draws left → right over the full range
+        // Line: fades in + draws left → right
         line.style.transform = `scaleX(${progress.toFixed(4)})`;
+        line.style.opacity   = Math.min(1, progress * 2).toFixed(4); // fully opaque by halfway
 
-        // Title appears after line is ~65% drawn
-        const tp = Math.min(1, Math.max(0, (progress - 0.65) / 0.35));
+        // Title: rises up and fades in after line is ~50% drawn
+        const tp = Math.min(1, Math.max(0, (progress - 0.5) / 0.5));
         title.style.opacity   = tp.toFixed(4);
-        title.style.transform = `translateY(${(28 * (1 - tp)).toFixed(2)}px)`;
+        title.style.transform = `translateY(${(60 * (1 - tp)).toFixed(2)}px)`;
       }
 
       window.addEventListener('scroll', update, { passive: true });
