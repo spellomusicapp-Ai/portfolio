@@ -123,28 +123,11 @@
       mix-blend-mode: luminosity;
     }
 
-    /* Typing animation — plays once on load, stays visible */
-    @keyframes typing {
-      from { clip-path: inset(0 100% 0 0); }
-      to   { clip-path: inset(0 0%   0 0); }
-    }
-
     .hello {
       font-size: 40px;
       color: rgba(33, 84, 221, 0.7);
       margin-bottom: -10px;
-      clip-path: inset(0 100% 0 0);
-      animation: typing 2.2s steps(27, end) forwards;
     }
-
-    /* Wrapper so subtitle width matches h1 */
-    .hero-title-block {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
-      max-width: 90vw;
-    }
-    .hero-title-block h1 { white-space: nowrap; }
 
     .hero h1 {
       font-family: 'Poppins', sans-serif;
@@ -156,10 +139,10 @@
 
     .hero-subtitle {
       font-family: Georgia, serif;
-      font-size: 44px;
+      font-size: 48px;
       color: #949494;
       line-height: 1.25;
-      text-align: center;
+      max-width: 750px;
       margin-top: 8px;
     }
 
@@ -522,8 +505,8 @@
       .nav { padding: 20px 24px; }
       .nav a { font-size: 14px; }
       .nav-links { gap: 20px; }
-      .hero h1 { font-size: 42px; white-space: normal; }
-      .hero-subtitle { font-size: 24px; }
+      .hero h1 { font-size: 42px; }
+      .hero-subtitle { font-size: 26px; }
       .hero-photo-wrapper { width: 200px; height: 200px; }
       .hello { font-size: 28px; }
       .projects-grid { gap: 16px; }
@@ -563,13 +546,12 @@
         <img src="assets/profile.png" alt="Noam Haviv portrait">
       </div>
 
-      <p class="hello font-hand">hello I'm noam bracha haviv</p>
-      <div class="hero-title-block">
-        <h1>Product designer</h1>
-        <p class="hero-subtitle font-serif">
-          Passionate about research &amp; digital experience design.
-        </p>
-      </div>
+      <p class="hello font-hand">hello</p>
+      <h1>Product designer</h1>
+      <p class="hero-subtitle font-serif">
+        Passionate about research<br>
+        &amp; digital experience design.
+      </p>
 
       <div class="hero-cta">
         <a href="mailto:noam.haviv@joinbetter.com" class="btn-primary">
